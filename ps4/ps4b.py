@@ -109,10 +109,11 @@ class Message(object):
         '''
         dict_cipher=dict()
         alphabets="abcdefghijklmnopqrstuvwxyz"
-        for i in range(0,25):
+        for i in range(0,26):# 0 to 25 not including 26
             final_index=i+shift
-            if final_index>26:
-                final_index=final_index-25
+            if final_index>=26:
+                final_index=final_index-26
+                print("Yes")
             dict_cipher[alphabets[i]]=alphabets[final_index]
         
         return dict_cipher
@@ -131,13 +132,27 @@ class Message(object):
              down the alphabet by the input shift
         '''
         message_list=list(self.message_text)
-        shift_dict=build_shift_dict(self, shift)
+        
+        dict_cipher=dict()
+        alphabets="abcdefghijklmnopqrstuvwxyz"
+        for i in range(0,26):# 0 to 25 not including 26
+            final_index=i+shift
+            if final_index>=26:
+                final_index=final_index-26
+                print("Yes")
+            dict_cipher[alphabets[i]]=alphabets[final_index]
+        
+        shift_dict=dict_cipher
+        
+        new_message_list=[]
         for e in message_list:
             if e in shift_dict:
-                new_message_list=shift_dict[e]
+                new_message_list.append(shift_dict[e])
             else:
-                new_message_list=e
-        
+                new_message_list.append(e)
+        print()
+        self.message_text="".join(new_message_list)
+        return self.message_text
         
         #delete this line and replace with your code here
 
@@ -157,10 +172,9 @@ class PlaintextMessage(Message):
             self.message_text_encrypted (string, created using shift)
 
         '''
-        self.message_text=text
         self.shift=shift
         
-        pass #delete this line and replace with your code here
+        #delete this line and replace with your code here
 
     def get_shift(self):
         '''
@@ -168,7 +182,8 @@ class PlaintextMessage(Message):
         
         Returns: self.shift
         '''
-        pass #delete this line and replace with your code here
+        return self.shift
+        #delete this line and replace with your code here
 
     def get_encryption_dict(self):
         '''

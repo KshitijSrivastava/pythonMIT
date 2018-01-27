@@ -172,7 +172,11 @@ class PlaintextMessage(Message):
             self.message_text_encrypted (string, created using shift)
 
         '''
+        Message.__init__(self, text)
         self.shift=shift
+        self.encryption_dict=Message.build_shift_dict(self, shift)
+        self.valid_words=Message.get_valid_words(self)
+        self.message_text_encrypted=Message.apply_shift(self,shift)
         
         #delete this line and replace with your code here
 
@@ -191,7 +195,8 @@ class PlaintextMessage(Message):
         
         Returns: a COPY of self.encryption_dict
         '''
-        pass #delete this line and replace with your code here
+        return self.encryption_dict
+        #delete this line and replace with your code here
 
     def get_message_text_encrypted(self):
         '''
@@ -199,7 +204,8 @@ class PlaintextMessage(Message):
         
         Returns: self.message_text_encrypted
         '''
-        pass #delete this line and replace with your code here
+        return self.message_text_encrypted
+        #delete this line and replace with your code here
 
     def change_shift(self, shift):
         '''
@@ -211,6 +217,7 @@ class PlaintextMessage(Message):
 
         Returns: nothing
         '''
+        self.shift=shift
         pass #delete this line and replace with your code here
 
 

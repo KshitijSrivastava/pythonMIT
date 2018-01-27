@@ -113,7 +113,6 @@ class Message(object):
             final_index=i+shift
             if final_index>=26:
                 final_index=final_index-26
-                print("Yes")
             dict_cipher[alphabets[i]]=alphabets[final_index]
         
         return dict_cipher
@@ -139,7 +138,6 @@ class Message(object):
             final_index=i+shift
             if final_index>=26:
                 final_index=final_index-26
-                print("Yes")
             dict_cipher[alphabets[i]]=alphabets[final_index]
         
         shift_dict=dict_cipher
@@ -151,8 +149,8 @@ class Message(object):
             else:
                 new_message_list.append(e)
         print()
-        self.message_text="".join(new_message_list)
-        return self.message_text
+        encryt_message_text="".join(new_message_list)
+        return encryt_message_text
         
         #delete this line and replace with your code here
 
@@ -252,7 +250,31 @@ class CiphertextMessage(Message):
         Returns: a tuple of the best shift value used to decrypt the message
         and the decrypted message text using that shift value
         '''
-        pass #delete this line and replace with your code here
+        word_list=load_words(WORDLIST_FILENAME)
+        
+        
+        for shift in range(0,26):
+            #shift_dict=Message.build_shift_dict(self, shift)
+            decrypted_massage=Message.apply_shift(self, shift)
+            decrypted_massage_list=decrypted_massage.split(" ")
+            
+            count=0
+            shift_count=dict()
+            for e in decrypted_massage_list:
+                if is_word(word_list, e):
+                    count=count+1
+                    shift_count[shift]=count
+        
+        decrypt=tuple()
+        max_key_value=max(shift_count.values())
+        for i in shift_count:
+            if shift_count[i]==max_key_value:
+                predicted_shift=26-i
+                decrypted_massage=Message.apply_shift(self,predicted_shift)
+                decrypt= decrypt + (predicted_shift,decrypted_massage)
+        return decrypt   
+            
+        #delete this line and replace with your code here
 
 if __name__ == '__main__':
 
